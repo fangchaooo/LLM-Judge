@@ -10,26 +10,14 @@ after the number had been written down.
 
 Each case has a mechanism that was measured rather than guessed:
 
-┌─────┬─────────────────────────────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────┐
-│     │ Finding                                                                     │ The numbers                                                  │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 1   │ A constant predictor beat most of the arms                                  │ Majority class 0.7031; 4 of 5 rescored arms fell below it    │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 1b  │ The prompt already contained the decision program, so transcribing it       │ 24/24 and 12/12 with 0 model calls                           │
-│     │ scores perfectly                                                            │                                                              │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 2   │ Holding the arm fixed and changing only the training seed moved it more     │ Largest within-arm movement 0.1574, against a largest        │
-│     │ than the arms differed                                                      │ power-calibration anchor of 0.0652                           │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 3   │ A zero-shot evaluation that is byte-identical across reruns still changes   │ Seven paraphrases span 0.0271, wider than the entire         │
-│     │ its answer when a clause is reworded                                        │ reported margin of 0.0250                                    │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 4   │ A gate criterion measured the data pipeline, not the model                  │ All 3 arms, including a constant-velocity control, report    │
-│     │                                                                             │ 0.8947                                                       │
-├─────┼─────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
-│ 5   │ The same question, asked twice, reversed sign because the reference arm had │ Miss rates went from 0.1761 vs 0.5341 to 0.0125 vs 0.0109    │
-│     │ got stronger                                                                │                                                              │
-└─────┴─────────────────────────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
+| # | Finding | The numbers |
+|---|---|---|
+| 1 | A constant predictor beat most of the arms | Majority class 0.7031; 4 of 5 rescored arms fell below it |
+| 1b | The prompt already contained the decision program, so transcribing it scores perfectly | 24/24 and 12/12 with 0 model calls |
+| 2 | Holding the arm fixed and changing only the training seed moved it more than the arms differed | Largest within-arm movement 0.1574, against a largest power-calibration anchor of 0.0652 |
+| 3 | A zero-shot evaluation that is byte-identical across reruns still changes its answer when a clause is reworded | Seven paraphrases span 0.0271, wider than the entire reported margin of 0.0250 |
+| 4 | A gate criterion measured the data pipeline, not the model | All 3 arms, including a constant-velocity control, report 0.8947 |
+| 5 | The same question, asked twice, reversed sign because the reference arm had got stronger | Miss rates went from 0.1761 vs 0.5341 to 0.0125 vs 0.0109 |
 
 The sixth case runs the other way, and is the most useful one. An endpoint sitting at 0.5250 against constant strategies at 0.5000 looks like absent
 capability. But reading out the probability the model placed on the token it had already emitted — leaving the generated answers byte-identical — gives
